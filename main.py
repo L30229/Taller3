@@ -109,7 +109,7 @@ while (True):
                         case OpcionesMenuMiembro.VER_HORARIO_CLASES.value:
                             pass
 
-                        case OpcionesMenuMiembro.REGISTRAR_ASISTENCIA:
+                        case OpcionesMenuMiembro.REGISTRAR_ASISTENCIA.value:
                             pass
 
                         case OpcionesMenuMiembro.CERRAR_SESION.value:
