@@ -43,16 +43,16 @@ while (True):
         case OpcionesMenuPrincipal.INICIAR_SESION.value:
             correo = input("Ingrese el correo: ")
             contraseña = input("Ingrese la contraseña: ")
-            is_cred_correct = queries.is_credenciales_correcta(correo=correo, contraseña=contraseña)
+            is_cred_correct = queries.is_credenciales_correcta(correo, contraseña)
             while (not is_cred_correct):
                 print("\nCredenciales incorrectas.\n")
                 correo = input("Ingrese el correo: ")
                 contraseña = input("Ingrese la contraseña: ")
-                is_cred_correct = queries.is_credenciales_correcta(correo=correo, contraseña=contraseña)
+                is_cred_correct = queries.is_credenciales_correcta(correo, contraseña)
 
             print("\nAcceso correcto.\n")
-            is_adm = queries.is_admin(correo=correo)
-            if (is_adm):
+            is_admin = queries.is_admin(correo)
+            if (is_admin):
                 while (True):
                     print(get_opciones_menu_admin())
                     cantidad_opciones = len(OpcionesMenuAdmin)
