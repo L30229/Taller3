@@ -90,7 +90,7 @@ while (True):
                             else:
                                 print("\nError al ingresar al miembro.\n")
 
-                        case OpcionesMenuAdmin.CERRAR_SESION:
+                        case OpcionesMenuAdmin.CERRAR_SESION.value:
                             break
             else:
                 while (True):
