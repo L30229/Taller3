@@ -65,7 +65,7 @@ while (True):
                     print()
                     match opcion:
                         case OpcionesMenuAdmin.REGISTRAR_MIEMBRO.value:
-                            print("[REGISTRAR MIEMBRO]\n")
+                            print("[" + OpcionesMenuAdmin.REGISTRAR_MIEMBRO.name + "]\n")
                             correo = input("Ingrese correo: ")
                             contraseña = utils.generar_contrasena()
                             nombre = input("Ingrese nombre: ")
@@ -88,7 +88,7 @@ while (True):
                                 print("\nMiembro ingresado correctamente.\n")
                             
                             else:
-                                print("\nError al ingresar al miembro.\n")
+                                print("\nError al ingresar miembro.\n")
 
                         case OpcionesMenuAdmin.CERRAR_SESION.value:
                             break
