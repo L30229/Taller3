@@ -96,7 +96,6 @@ def panel_miembro():
 running = True
 while (running):
     mostrar_menu("PANEL PRINCIPAL", OpcionesMenuPrincipal)
-    cantidad_opciones = len(OpcionesMenuPrincipal)
     opcion = ingresar_opcion(OpcionesMenuPrincipal)
     match opcion:
         case OpcionesMenuPrincipal.INICIAR_SESION.value:
