@@ -56,6 +56,43 @@ def registrar_miembro():
         tipo_membresia)
 
 
+def panel_admin():
+    is_logged_admin = True
+    while (is_logged_admin):
+        mostrar_menu("PANEL ADMIN", OpcionesMenuAdmin)
+        opcion = ingresar_opcion(OpcionesMenuAdmin)
+        match opcion:
+            case OpcionesMenuAdmin.REGISTRAR_MIEMBRO.value:
+                print("[" + OpcionesMenuAdmin.REGISTRAR_MIEMBRO.name + "]\n")
+                ingreso = registrar_miembro()
+                if (ingreso):
+                    print("\nMiembro ingresado correctamente.\n")
+                else:
+                    print("\nError al ingresar miembro.\n")
+
+            case OpcionesMenuAdmin.CERRAR_SESION.value:
+                is_logged_admin = False
+
+
+def panel_miembro():
+    is_logged_miembro = True
+    while (is_logged_miembro):
+        mostrar_menu("PANEL MIEMBRO", OpcionesMenuMiembro)
+        opcion = ingresar_opcion(OpcionesMenuMiembro)
+        match opcion:
+            case OpcionesMenuMiembro.VER_INFO_PERSONAL.value:
+                pass
+
+            case OpcionesMenuMiembro.VER_HORARIO_CLASES.value:
+                pass
+
+            case OpcionesMenuMiembro.REGISTRAR_ASISTENCIA.value:
+                pass
+
+            case OpcionesMenuMiembro.CERRAR_SESION.value:
+                is_logged_miembro = False
+
+
 running = True
 while (running):
     mostrar_menu("PANEL PRINCIPAL", OpcionesMenuPrincipal)
@@ -72,39 +109,10 @@ while (running):
             rol_usuario = resultado[0]
             match rol_usuario:
                 case Roles.ADMINISTRADOR.value:
-                    is_logged_admin = True
-                    while (is_logged_admin):
-                        mostrar_menu("PANEL ADMIN", OpcionesMenuAdmin)
-                        opcion = ingresar_opcion(OpcionesMenuAdmin)
-                        match opcion:
-                            case OpcionesMenuAdmin.REGISTRAR_MIEMBRO.value:
-                                print("[" + OpcionesMenuAdmin.REGISTRAR_MIEMBRO.name + "]\n")
-                                ingreso = registrar_miembro()
-                                if (ingreso):
-                                    print("\nMiembro ingresado correctamente.\n")
-                                else:
-                                    print("\nError al ingresar miembro.\n")
-
-                            case OpcionesMenuAdmin.CERRAR_SESION.value:
-                                is_logged_admin = False
+                    panel_admin()
 
                 case Roles.MIEMBRO.value:
-                    is_logged_miembro = True
-                    while (is_logged_miembro):
-                        mostrar_menu("PANEL MIEMBRO", OpcionesMenuMiembro)
-                        opcion = ingresar_opcion(OpcionesMenuMiembro)
-                        match opcion:
-                            case OpcionesMenuMiembro.VER_INFO_PERSONAL.value:
-                                pass
-
-                            case OpcionesMenuMiembro.VER_HORARIO_CLASES.value:
-                                pass
-
-                            case OpcionesMenuMiembro.REGISTRAR_ASISTENCIA.value:
-                                pass
-
-                            case OpcionesMenuMiembro.CERRAR_SESION.value:
-                                is_logged_miembro = False
+                    panel_miembro()
 
         case OpcionesMenuPrincipal.CERRAR_APLICACION.value:
             running = False
