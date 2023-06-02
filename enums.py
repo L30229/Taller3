@@ -20,3 +20,7 @@ class OpcionesMenuMiembro(Enum):
     VER_HORARIO_CLASES = 2
     REGISTRAR_ASISTENCIA = 3
     CERRAR_SESION = 4
+
+class Roles(Enum):
+    ADMINISTRADOR = 1
+    MIEMBRO = 2
