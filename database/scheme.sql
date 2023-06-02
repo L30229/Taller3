@@ -1,9 +1,16 @@
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 
+
+CREATE TABLE rol (
+  id SERIAL PRIMARY KEY,
+  tipo TEXT NOT NULL
+);
+
 CREATE TABLE usuario (
-    correo VARCHAR(255) PRIMARY KEY CHECK (correo LIKE '%@_%.%'),
-    contrasena TEXT CHECK (contrasena ~ '^(?=.*[A-Z])(?=.*\d).{6,8}$')
+  correo VARCHAR(255) PRIMARY KEY CHECK (correo LIKE '%@_%.%'),
+  contrasena TEXT CHECK (contrasena ~ '^(?=.*[A-Z])(?=.*\d).{6,8}$'),
+  rol_id INTEGER NOT NULL REFERENCES rol(id)
 );
 
 CREATE TABLE administrador (
@@ -30,19 +37,22 @@ CREATE TABLE clase (
   horario TIME NOT NULL
 );
 
-INSERT INTO usuario
-VALUES ('gimnasiocarlos@gmail.com', 'CNaRa11Z');
-INSERT INTO administrador
-VALUES ('gimnasiocarlos@gmail.com');
-  
-INSERT INTO usuario (correo, contrasena) 
-VALUES
-('usuario1@example.com', 'Pass123'),
-('usuario2@example.com', 'P4ss789'),
-('usuario3@example.com', 'Secu01'),
-('usuario4@example.com', 'MyP@02'),
-('usuario5@example.com', 'Stro0rd');
+INSERT INTO rol (tipo)
+VALUES 
+('Administrador'),
+('Miembro');
 
+INSERT INTO usuario (correo, contrasena, rol_id)
+VALUES
+('gimnasiocarlos@gmail.com', 'CNaRa11Z', 1),
+('usuario1@example.com', 'Pass123', 2),
+('usuario2@example.com', 'P4ss789', 2),
+('usuario3@example.com', 'Secu01', 2),
+('usuario4@example.com', 'MyP@02', 2),
+('usuario5@example.com', 'Stro0rd', 2);
+
+INSERT INTO administrador (correo_administrador)
+VALUES ('gimnasiocarlos@gmail.com');
 
 INSERT INTO miembro (correo_miembro, nombre, edad, direccion, telefono, fecha_vencimiento, tipo_membresia) 
 VALUES
