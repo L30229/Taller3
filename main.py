@@ -14,7 +14,8 @@ def get_opciones_menu(menu_enum):
     return opciones
 
 
-while (True):
+running = True
+while (running):
     print("\n\t[PANEL PRINCIPAL]\n")
     print(get_opciones_menu(OpcionesMenuPrincipal))
     cantidad_opciones = len(OpcionesMenuPrincipal)
@@ -45,7 +46,8 @@ while (True):
             rol_usuario = resultado[0]
             match rol_usuario:
                 case Roles.ADMINISTRADOR.value:
-                    while (True):
+                    is_logged_admin = True
+                    while (is_logged_admin):
                         print("[PANEL ADMIN]")
                         print(get_opciones_menu(OpcionesMenuAdmin))
                         cantidad_opciones = len(OpcionesMenuAdmin)
@@ -84,9 +86,11 @@ while (True):
                                     print("\nError al ingresar miembro.\n")
 
                             case OpcionesMenuAdmin.CERRAR_SESION.value:
-                                break
+                                is_logged_admin = False
+
                 case Roles.MIEMBRO.value:
-                    while (True):
+                    is_logged_miembro = True
+                    while (is_logged_admin):
                         print("\n\t[PANEL MIEMBRO]\n")
                         print(get_opciones_menu(OpcionesMenuMiembro))
                         cantidad_opciones = len(OpcionesMenuMiembro)
@@ -107,8 +111,8 @@ while (True):
                                 pass
 
                             case OpcionesMenuMiembro.CERRAR_SESION.value:
-                                break
+                                is_logged_miembro = False
 
         case OpcionesMenuPrincipal.CERRAR_APLICACION.value:
+            running = False
             print("Aplicación finalizada.")
-            break
