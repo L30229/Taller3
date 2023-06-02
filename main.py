@@ -6,39 +6,64 @@ from enums import OpcionesMenuPrincipal, \
     Roles
 
 
-def get_opciones_menu(menu_enum):
-    opciones = ""
-    for i, opcion in enumerate(menu_enum, start=1):
-        opciones += f"\t{i}) {opcion.name}\n" 
+def mostrar_menu(titulo, opciones_menu):
+    print(f"\n\t[{titulo}]\n")
+    for opcion in opciones_menu:
+        print(f"\t{opcion.value}. {opcion.name}")
+    
+    print()
 
-    return opciones
+
+def ingresar_opcion(opciones_menu):
+    opcion = int(input(f"Seleccione una opción (1 - {len(opciones_menu)}): "))
+    while (opcion <= 0 or opcion > len(opciones_menu)):
+        print()
+        print("Opción incorrecta.\n")
+        opcion = int(input(f"Seleccione una opción (1 - {len(opciones_menu)}): "))
+    
+    print()
+    return opcion
+
+
+def iniciar_sesion():
+    correo = input("Ingrese el correo: ")
+    contraseña = input("Ingrese la contraseña: ")
+    while not queries.is_credenciales_correcta(correo, contraseña):
+        print("\nCredenciales incorrectas.\n")
+        correo = input("Ingrese el correo: ")
+        contraseña = input("Ingrese la contraseña: ")
+
+    print("\nAcceso correcto.\n")
+    return correo
+
+def registrar_miembro():
+    correo = input("Ingrese correo: ")
+    nombre = input("Ingrese nombre: ")
+    edad = int(input("Ingrese edad: "))
+    direccion = input("Ingrese dirección: ")
+    telefono = input("Ingrese telefono: ")
+    fecha_vencimiento = input("Ingrese fecha de vencimiento: ")
+    tipo_membresia = input("Ingrese tipo de membresia: ")
+    return queries.ingresar_miembro(
+        correo,
+        utils.generar_contrasena(),
+        nombre,
+        edad,
+        direccion,
+        telefono,
+        fecha_vencimiento,
+        tipo_membresia)
 
 
 running = True
 while (running):
-    print("\n\t[PANEL PRINCIPAL]\n")
-    print(get_opciones_menu(OpcionesMenuPrincipal))
+    mostrar_menu("PANEL PRINCIPAL", OpcionesMenuPrincipal)
     cantidad_opciones = len(OpcionesMenuPrincipal)
-    opcion = int(input(f"Seleccione una opción (1 - {cantidad_opciones}): "))
-    while (opcion <= 0 or opcion > cantidad_opciones):
-                print()
-                print("Opción incorrecta.\n")
-                opcion = int(input(f"Seleccione una opción (1 - {cantidad_opciones}): "))
-
-    print()
+    opcion = ingresar_opcion(OpcionesMenuPrincipal)
     match opcion:
         case OpcionesMenuPrincipal.INICIAR_SESION.value:
-            correo = input("Ingrese el correo: ")
-            contraseña = input("Ingrese la contraseña: ")
-            is_cred_correct = queries.is_credenciales_correcta(correo, contraseña)
-            while (not is_cred_correct):
-                print("\nCredenciales incorrectas.\n")
-                correo = input("Ingrese el correo: ")
-                contraseña = input("Ingrese la contraseña: ")
-                is_cred_correct = queries.is_credenciales_correcta(correo, contraseña)
-
-            print("\nAcceso correcto.\n")
-            resultado = queries.get_rol_usuario(correo)
+            correo_usuario = iniciar_sesion()
+            resultado = queries.get_rol_usuario(correo_usuario)
             if resultado is None:
                 print("No se encontró ningún rol para el usuario.")
                 continue
@@ -48,40 +73,14 @@ while (running):
                 case Roles.ADMINISTRADOR.value:
                     is_logged_admin = True
                     while (is_logged_admin):
-                        print("[PANEL ADMIN]")
-                        print(get_opciones_menu(OpcionesMenuAdmin))
-                        cantidad_opciones = len(OpcionesMenuAdmin)
-                        opcion = int(input(f"Seleccione una opción (1 - {cantidad_opciones}): "))
-                        while (opcion <= 0 or opcion > cantidad_opciones):
-                            print()
-                            print("Opción incorrecta.\n")
-                            opcion = int(input(f"Seleccione una opción (1 - {cantidad_opciones}): "))
-
-                        print()
+                        mostrar_menu("PANEL ADMIN", OpcionesMenuAdmin)
+                        opcion = ingresar_opcion(OpcionesMenuAdmin)
                         match opcion:
                             case OpcionesMenuAdmin.REGISTRAR_MIEMBRO.value:
                                 print("[" + OpcionesMenuAdmin.REGISTRAR_MIEMBRO.name + "]\n")
-                                correo = input("Ingrese correo: ")
-                                contraseña = utils.generar_contrasena()
-                                nombre = input("Ingrese nombre: ")
-                                edad = int(input("Ingrese edad: "))
-                                direccion = input("Ingrese dirección: ")
-                                telefono = input("Ingrese telefono: ")
-                                fecha_vencimiento = input("Ingrese fecha de vencimiento: ")
-                                tipo_membresia = input("Ingrese tipo de membresia: ")
-                                ingreso = queries.ingresar_miembro(
-                                    correo,
-                                    contraseña,
-                                    nombre,
-                                    edad,
-                                    direccion,
-                                    telefono,
-                                    fecha_vencimiento,
-                                    tipo_membresia)
-                            
+                                ingreso = registrar_miembro()
                                 if (ingreso):
                                     print("\nMiembro ingresado correctamente.\n")
-                            
                                 else:
                                     print("\nError al ingresar miembro.\n")
 
@@ -90,16 +89,9 @@ while (running):
 
                 case Roles.MIEMBRO.value:
                     is_logged_miembro = True
-                    while (is_logged_admin):
-                        print("\n\t[PANEL MIEMBRO]\n")
-                        print(get_opciones_menu(OpcionesMenuMiembro))
-                        cantidad_opciones = len(OpcionesMenuMiembro)
-                        opcion = int(input(f"Seleccione una opción (1 - {cantidad_opciones}): "))
-                        while (opcion <= 0 or opcion > cantidad_opciones):
-                            print()
-                            print("Opción incorrecta.\n")
-                            opcion = int(input(f"Seleccione una opción (1 - {cantidad_opciones}): "))
-                
+                    while (is_logged_miembro):
+                        mostrar_menu("PANEL MIEMBRO", OpcionesMenuMiembro)
+                        opcion = ingresar_opcion(OpcionesMenuMiembro)
                         match opcion:
                             case OpcionesMenuMiembro.VER_INFO_PERSONAL.value:
                                 pass
