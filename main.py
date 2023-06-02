@@ -56,7 +56,7 @@ def registrar_miembro():
         tipo_membresia)
 
 
-def panel_admin():
+def subpanel_admin():
     is_logged_admin = True
     while (is_logged_admin):
         mostrar_menu("PANEL ADMIN", OpcionesMenuAdmin)
@@ -74,7 +74,7 @@ def panel_admin():
                 is_logged_admin = False
 
 
-def panel_miembro():
+def subpanel_miembro():
     is_logged_miembro = True
     while (is_logged_miembro):
         mostrar_menu("PANEL MIEMBRO", OpcionesMenuMiembro)
@@ -93,26 +93,31 @@ def panel_miembro():
                 is_logged_miembro = False
 
 
-running = True
-while (running):
-    mostrar_menu("PANEL PRINCIPAL", OpcionesMenuPrincipal)
-    opcion = ingresar_opcion(OpcionesMenuPrincipal)
-    match opcion:
-        case OpcionesMenuPrincipal.INICIAR_SESION.value:
-            correo_usuario = iniciar_sesion()
-            resultado = queries.get_rol_usuario(correo_usuario)
-            if resultado is None:
-                print("No se encontró ningún rol para el usuario.")
-                continue
+def panel_principal():
+    running = True
+    while (running):
+        mostrar_menu("PANEL PRINCIPAL", OpcionesMenuPrincipal)
+        opcion = ingresar_opcion(OpcionesMenuPrincipal)
+        match opcion:
+            case OpcionesMenuPrincipal.INICIAR_SESION.value:
+                correo_usuario = iniciar_sesion()
+                resultado = queries.get_rol_usuario(correo_usuario)
+                if resultado is None:
+                    print("No se encontró ningún rol para el usuario.")
+                    continue
 
-            rol_usuario = resultado[0]
-            match rol_usuario:
-                case Roles.ADMINISTRADOR.value:
-                    panel_admin()
+                rol_usuario = resultado[0]
+                match rol_usuario:
+                    case Roles.ADMINISTRADOR.value:
+                        subpanel_admin()
 
-                case Roles.MIEMBRO.value:
-                    panel_miembro()
+                    case Roles.MIEMBRO.value:
+                        subpanel_miembro()
 
-        case OpcionesMenuPrincipal.CERRAR_APLICACION.value:
-            running = False
-            print("Aplicación finalizada.")
+            case OpcionesMenuPrincipal.CERRAR_APLICACION.value:
+                running = False
+                print("Aplicación finalizada.")
+
+
+if __name__ == "__main__":
+    panel_principal()
