@@ -36,6 +36,7 @@ def iniciar_sesion():
     print("\nAcceso correcto.\n")
     return correo
 
+
 def registrar_miembro():
     correo = input("Ingrese correo: ")
     nombre = input("Ingrese nombre: ")
