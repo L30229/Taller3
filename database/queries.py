@@ -43,7 +43,7 @@ def ingresar_miembro(correo,
       cursor = con.cursor()
       try:
         con.autocommit = False
-        cursor.execute("INSERT INTO usuario (correo, contrasena) VALUES (%s, %s);", (correo, contraseña))
+        cursor.execute("INSERT INTO usuario (correo, contrasena, rol_id) VALUES (%s, %s, %s);", (correo, contraseña, 2))
         cursor.execute("INSERT INTO miembro \
                         (correo_miembro, \
                         nombre, \
