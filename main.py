@@ -1,10 +1,19 @@
 from database import queries
+import re
 import utils
 from enums import OpcionesMenuPrincipal, \
     OpcionesMenuAdmin, \
     OpcionesMenuMiembro, \
     Roles
 
+
+def solicitar_contrasena():
+    while True:
+        contrasena = input("Ingrese una contraseña: ")
+        if re.match(r'^(?=.*[A-Z])(?=.*\d).{6,8}$', contrasena):
+            return contrasena
+        else:
+            print("Contraseña inválida. Debe tener al menos una letra mayúscula, un número y tener una longitud de 6 a 8 caracteres. Inténtelo nuevamente.")
 
 def mostrar_menu(titulo, opciones_menu):
     print(f"\n\t[{titulo}]\n")
@@ -39,7 +48,7 @@ def iniciar_sesion():
 
 def registrar_miembro():
     correo = input("Ingrese correo: ")
-    contraseña = input("Ingrese contraseña: ")
+    contraseña = solicitar_contrasena()
     nombre = input("Ingrese nombre: ")
     edad = int(input("Ingrese edad: "))
     direccion = input("Ingrese dirección: ")
