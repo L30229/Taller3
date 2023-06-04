@@ -39,6 +39,7 @@ def iniciar_sesion():
 
 def registrar_miembro():
     correo = input("Ingrese correo: ")
+    contraseña = input("Ingrese contraseña: ")
     nombre = input("Ingrese nombre: ")
     edad = int(input("Ingrese edad: "))
     direccion = input("Ingrese dirección: ")
@@ -47,7 +48,7 @@ def registrar_miembro():
     tipo_membresia = input("Ingrese tipo de membresia: ")
     return queries.ingresar_miembro(
         correo,
-        utils.generar_contrasena(),
+        contraseña,
         nombre,
         edad,
         direccion,
