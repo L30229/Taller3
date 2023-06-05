@@ -8,10 +8,10 @@ from enums import OpcionesMenuPrincipal, \
     Roles
 
 
-def solicitar_fecha():
+def solicitar_fecha(prompt):
     while True:
         try:
-            fecha_vencimiento = input("Ingrese fecha de vencimiento: ")
+            fecha_vencimiento = input(prompt)
             return datetime.strptime(fecha_vencimiento, '%Y-%m-%d')
         
         except ValueError:
@@ -66,7 +66,7 @@ def registrar_miembro():
     edad = int(input("Ingrese edad: "))
     direccion = input("Ingrese dirección: ")
     telefono = input("Ingrese telefono: ")
-    fecha_vencimiento = solicitar_fecha()
+    fecha_vencimiento = solicitar_fecha("Ingrese fecha de vencimiento: ")
     tipo_membresia = input("Ingrese tipo de membresia: ")
     return queries.ingresar_miembro(
         correo,
