@@ -19,9 +19,10 @@ def solicitar_fecha(prompt):
 
 
 def solicitar_contrasena():
+    contrasena_regex = re.compile(r'^(?=.*[A-Z])(?=.*\d).{6,8}$')
     while True:
         contrasena = input("Ingrese una contraseña: ")
-        if re.match(r'^(?=.*[A-Z])(?=.*\d).{6,8}$', contrasena):
+        if contrasena_regex.match(contrasena):
             return contrasena
         
         print("\nContraseña inválida, inténtelo nuevamente. (Debe tener al menos una letra mayúscula"
