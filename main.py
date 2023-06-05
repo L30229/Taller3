@@ -6,14 +6,15 @@ from enums import OpcionesMenuPrincipal, \
     OpcionesMenuMiembro, \
     Roles
 
-
 def solicitar_contrasena():
     while True:
         contrasena = input("Ingrese una contraseña: ")
         if re.match(r'^(?=.*[A-Z])(?=.*\d).{6,8}$', contrasena):
             return contrasena
-        else:
-            print("Contraseña inválida. Debe tener al menos una letra mayúscula, un número y tener una longitud de 6 a 8 caracteres. Inténtelo nuevamente.")
+        
+        print("\nContraseña inválida, inténtelo nuevamente. (Debe tener al menos una letra mayúscula"
+              ", un número y tener una longitud de 6 a 8 caracteres)\n")
+
 
 def mostrar_menu(titulo, opciones_menu):
     print(f"\n\t[{titulo}]\n")
