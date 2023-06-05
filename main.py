@@ -11,8 +11,8 @@ from enums import OpcionesMenuPrincipal, \
 def solicitar_fecha(prompt):
     while True:
         try:
-            fecha_vencimiento = input(prompt)
-            return datetime.strptime(fecha_vencimiento, '%Y-%m-%d')
+            fecha = input(prompt)
+            return datetime.strptime(fecha, '%Y-%m-%d')
         
         except ValueError:
             print("Fecha inválida, inténtelo nuevamente.")
