@@ -1,10 +1,22 @@
 from database import queries
 import re
 import utils
+from datetime import datetime
 from enums import OpcionesMenuPrincipal, \
     OpcionesMenuAdmin, \
     OpcionesMenuMiembro, \
     Roles
+
+
+def solicitar_fecha():
+    while True:
+        try:
+            fecha_vencimiento = input("Ingrese fecha de vencimiento: ")
+            return datetime.strptime(fecha_vencimiento, '%Y-%m-%d')
+        
+        except ValueError:
+            print("Fecha inválida, inténtelo nuevamente.")
+
 
 def solicitar_contrasena():
     while True:
@@ -54,7 +66,7 @@ def registrar_miembro():
     edad = int(input("Ingrese edad: "))
     direccion = input("Ingrese dirección: ")
     telefono = input("Ingrese telefono: ")
-    fecha_vencimiento = input("Ingrese fecha de vencimiento: ")
+    fecha_vencimiento = solicitar_fecha()
     tipo_membresia = input("Ingrese tipo de membresia: ")
     return queries.ingresar_miembro(
         correo,
