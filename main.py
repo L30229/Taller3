@@ -86,7 +86,7 @@ def get_info_miembro():
     telefono,
     fecha_vencimiento_dt,
     tipo_membresia) = info_miembro
-    salida += "Nombre: " + nombre + "\n" \
+    salida += "\nNombre: " + nombre + "\n" \
         + "Edad: " + str(edad) + "\n" \
         + "Dirección: " + direccion + "\n" \
         + "Teléfono: " + telefono + "\n" \
@@ -125,12 +125,12 @@ def get_miembros_membresia_vencida():
     telefono,
     fecha_vencimiento_dt,
     tipo_membresia) in miembros_membresia_vencida:
-        salida += "Nombre: " + nombre + "\n" \
+        salida += "\nNombre: " + nombre + "\n" \
         + "Edad: " + str(edad) + "\n" \
         + "Dirección: " + direccion + "\n" \
         + "Teléfono: " + telefono + "\n" \
         + "Fecha vencimiento: " + fecha_vencimiento_dt.strftime('%Y-%m-%d') + "\n" \
-        + "Tipo membresía: " + tipo_membresia + "\n\n"
+        + "Tipo membresía: " + tipo_membresia + "\n"
     return salida
 
 def agregar_clases():
@@ -158,7 +158,7 @@ def get_info_clases():
     horario) in info_clases:
         salida += "\nId clase: " + id_clase + "\n" \
         + "Instructor: " + nombre_instructor + "\n" \
-        + "Horario: " + horario.strftime("%H:%M:%S") + "\n\n"
+        + "Horario: " + horario.strftime("%H:%M:%S") + "\n"
     return salida
 
 def get_asistencia_por_fecha():
