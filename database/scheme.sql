@@ -8,17 +8,17 @@ CREATE TABLE rol (
 );
 
 CREATE TABLE usuario (
-  correo VARCHAR(255) PRIMARY KEY CHECK (correo LIKE '%@_%.%'),
-  contrasena TEXT CHECK (contrasena ~ '^(?=.*[A-Z])(?=.*\d).{6,8}$'),
+  correo VARCHAR(255) NOT NULL PRIMARY KEY CHECK (correo LIKE '%@_%.%'),
+  contrasena TEXT NOT NULL CHECK (contrasena ~ '^(?=.*[A-Z])(?=.*\d).{6,8}$'),
   rol_id INTEGER NOT NULL REFERENCES rol(id)
 );
 
 CREATE TABLE administrador (
-  correo_administrador TEXT NOT NULL REFERENCES usuario(correo)
+  correo_administrador TEXT NOT NULL PRIMARY KEY REFERENCES usuario(correo)
 );
 
 CREATE TABLE miembro (
-  correo_miembro TEXT NOT NULL REFERENCES usuario(correo),
+  correo_miembro TEXT NOT NULL PRIMARY KEY REFERENCES usuario(correo),
   nombre TEXT NOT NULL,
   edad INTEGER NOT NULL,
   direccion TEXT NOT NULL,
@@ -35,6 +35,12 @@ CREATE TABLE clase (
   id TEXT PRIMARY KEY,
   nombre_instructor TEXT NOT NULL REFERENCES instructor(nombre),
   horario TIME NOT NULL
+);
+
+CREATE TABLE asiste (
+  correo_miembro TEXT NOT NULL REFERENCES miembro(correo_miembro),
+  id_clase TEXT NOT NULL REFERENCES clase(id),
+  fecha_asistencia DATE NOT NULL
 );
 
 INSERT INTO rol (tipo)
@@ -77,3 +83,9 @@ VALUES
 ('Clase3', 'Instructor C', '10:00:00'),
 ('Clase4', 'Instructor D', '17:00:00'),
 ('Clase5', 'Instructor E', '15:30:00');
+
+INSERT INTO asiste (correo_miembro, id_clase, fecha_asistencia) 
+VALUES
+('usuario1@example.com', 'Clase1', '2023-05-31'),
+('usuario2@example.com', 'Clase1', '2023-05-31'),
+('usuario2@example.com', 'Clase2', '2023-05-31')
