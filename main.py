@@ -267,16 +267,6 @@ def get_info_personal(correo_usuario):
     
     print(salida)
 
-def get_horario_clases(correo_usuario):
-    info_horario = queries.get_horario(correo_usuario)
-    salida = ""
-    for (fecha_asistencia, id_clase, nombre_instructor, hora) in info_horario:
-        salida += "\n" + fecha_asistencia.strftime('%Y-%m-%d') + "\n" \
-            + "Clase: " + id_clase + "\n" \
-            + "Instructor: " + nombre_instructor + "\n" \
-            + "Hora: " + hora.strftime('%H:%M:%S') + "\n"  # Modificar aquí
-    print(salida)
-
 def registrar_asistencia(correo_usuario):
     fecha_asistencia = solicitar_fecha("Ingrese fecha de asistencia: ")
     id_clase = input("Ingrese nombre de la clase a la que desea asistir: ")
@@ -299,11 +289,10 @@ def subpanel_miembro(correo_usuario):
 
             case OpcionesMenuMiembro.VER_HORARIO_CLASES.value:
                 print("[" + OpcionesMenuMiembro.VER_HORARIO_CLASES.name + "]\n")
-                get_horario_clases(correo_usuario)
+                print(get_info_clases())
 
             case OpcionesMenuMiembro.REGISTRAR_ASISTENCIA.value:
-                print("[" + OpcionesMenuMiembro.REGISTRAR_ASISTENCIA.name + "]\n")
-                print(get_info_clases())
+                print("[" + OpcionesMenuMiembro.REGISTRAR_ASISTENCIA.name + "]\n")                
                 registrar_asistencia(correo_usuario)
 
             case OpcionesMenuMiembro.CERRAR_SESION.value:

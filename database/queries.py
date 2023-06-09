@@ -215,19 +215,3 @@ def get_datos_asistencias(fecha):
     resultado = []
 
   return resultado
-
-def get_horario(correo_usuario):
-  resultado = None
-  with connect.get_connection() as con:
-    with con.cursor() as cursor:
-      cursor = con.cursor()
-      cursor.execute("SELECT a.fecha_asistencia, c.id, c.nombre_instructor, c.horario \
-                     FROM asiste a \
-                     INNER JOIN clase c ON a.id_clase = c.id \
-                     WHERE a.correo_miembro = %s \
-                     ORDER BY a.fecha_asistencia ASC, c.horario ASC;", (correo_usuario, ));
-      resultado = cursor.fetchall()
-  if resultado is None:
-    resultado = []
-  
-  return resultado
