@@ -87,5 +87,4 @@ VALUES
 INSERT INTO asiste (correo_miembro, id_clase, fecha_asistencia) 
 VALUES
 ('usuario1@example.com', 'Clase1', '2023-05-31'),
-('usuario2@example.com', 'Clase1', '2023-05-31'),
-('usuario2@example.com', 'Clase2', '2023-05-31')
+('usuario2@example.com', 'Clase2', '2023-05-31');
