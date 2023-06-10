@@ -244,13 +244,11 @@ def subpanel_admin():
             case OpcionesMenuAdmin.CERRAR_SESION.value:
                 is_logged_admin = False
 
-
-def get_info_personal(correo_usuario):
-    print(correo_usuario)
-    info_miembro = queries.get_datos_miembro(correo_usuario)
+def get_info_personal(correo_miembro):
+    info_miembro = queries.get_datos_miembro(correo_miembro)
     salida = ""
     if len(info_miembro) == 0:
-        print(salida)
+        return salida
 
     (nombre,
     edad,
@@ -265,17 +263,12 @@ def get_info_personal(correo_usuario):
         + "Fecha vencimiento: " + fecha_vencimiento_dt.strftime('%Y-%m-%d') + "\n" \
         + "Tipo membresía: " + tipo_membresia + "\n"
     
-    print(salida)
+    return salida
 
-def registrar_asistencia(correo_usuario):
+def registrar_asistencia(correo_miembro):
     fecha_asistencia = solicitar_fecha("Ingrese fecha de asistencia: ")
     id_clase = input("Ingrese nombre de la clase a la que desea asistir: ")
-    ingreso = queries.registrar_asistencia(correo_usuario, id_clase, fecha_asistencia)
-    if (ingreso):
-        print("\nAsistencia registrada correctamente.\n")
-    else:
-        print("\nError al registrar asistencia.\n")
-
+    return queries.registrar_asistencia(correo_miembro, id_clase, fecha_asistencia)
 
 def subpanel_miembro(correo_usuario):
     is_logged_miembro = True
@@ -285,15 +278,28 @@ def subpanel_miembro(correo_usuario):
         match opcion:
             case OpcionesMenuMiembro.VER_INFO_PERSONAL.value:
                 print("[" + OpcionesMenuMiembro.VER_INFO_PERSONAL.name + "]\n")
-                get_info_personal(correo_usuario)
+                info_personal = get_info_personal(correo_usuario)
+                if info_personal:
+                    print(info_personal)
+                else:
+                    print("Error al obtener información personal.")
 
             case OpcionesMenuMiembro.VER_HORARIO_CLASES.value:
                 print("[" + OpcionesMenuMiembro.VER_HORARIO_CLASES.name + "]\n")
-                print(get_info_clases())
+                info_clases = get_info_clases()
+                if info_clases:
+                    print(info_clases)
+                else:
+                    print()
+                    print("No hay clases disponibles.")
 
             case OpcionesMenuMiembro.REGISTRAR_ASISTENCIA.value:
                 print("[" + OpcionesMenuMiembro.REGISTRAR_ASISTENCIA.name + "]\n")                
-                registrar_asistencia(correo_usuario)
+                registrada = registrar_asistencia(correo_usuario)
+                if registrada:
+                    print("\nAsistencia registrada correctamente.\n")
+                else:
+                    print("\nError al registrar asistencia.\n")
 
             case OpcionesMenuMiembro.CERRAR_SESION.value:
                 is_logged_miembro = False
@@ -322,7 +328,6 @@ def panel_principal():
             case OpcionesMenuPrincipal.CERRAR_APLICACION.value:
                 running = False
                 print("Aplicación finalizada.")
-
 
 if __name__ == "__main__":
     panel_principal()
