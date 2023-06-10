@@ -158,6 +158,27 @@ def agregar_clase(
 
   return rowcount > 0
 
+def registrar_asistencia(correo_usuario, id_clase, fecha):
+  rowcount = 0
+  with connect.get_connection() as con:
+    with con.cursor() as cursor:
+      cursor = con.cursor()
+      try:
+        con.autocommit = False
+        cursor.execute("INSERT INTO asiste \
+                       (correo_miembro, \
+                       id_clase, \
+                       fecha_asistencia) VALUES (%s, %s, %s);", (correo_usuario, 
+                                                        id_clase, 
+                                                        fecha))
+        con.commit()
+        rowcount = cursor.rowcount > 0
+      except(Exception, Error) as error:
+          print("\nError: %s\n" % error)
+          con.rollback()
+
+  return rowcount > 0
+
 
 def get_datos_clases():
   resultado = None

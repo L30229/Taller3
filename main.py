@@ -57,8 +57,14 @@ def iniciar_sesion():
 def registrar_miembro():
     correo = input("Ingrese correo: ")
     contraseña = solicitar_contrasena()
-    nombre = input("Ingrese nombre: ")
-    edad = int(input("Ingrese edad: "))
+    nombre = input("Ingrese nombre: ")   
+    while True:
+        edad = input("Ingrese edad: ")
+        if edad.isdigit():
+            edad = int(edad)
+            break
+        else:
+            print("La edad debe ser un número. Intente nuevamente.")
     direccion = input("Ingrese dirección: ")
     telefono = input("Ingrese telefono: ")
     fecha_vencimiento = solicitar_fecha("Ingrese fecha de vencimiento: ")
@@ -239,20 +245,55 @@ def subpanel_admin():
                 is_logged_admin = False
 
 
-def subpanel_miembro():
+def get_info_personal(correo_usuario):
+    print(correo_usuario)
+    info_miembro = queries.get_datos_miembro(correo_usuario)
+    salida = ""
+    if len(info_miembro) == 0:
+        print(salida)
+
+    (nombre,
+    edad,
+    direccion,
+    telefono,
+    fecha_vencimiento_dt,
+    tipo_membresia) = info_miembro
+    salida += "\nNombre: " + nombre + "\n" \
+        + "Edad: " + str(edad) + "\n" \
+        + "Dirección: " + direccion + "\n" \
+        + "Teléfono: " + telefono + "\n" \
+        + "Fecha vencimiento: " + fecha_vencimiento_dt.strftime('%Y-%m-%d') + "\n" \
+        + "Tipo membresía: " + tipo_membresia + "\n"
+    
+    print(salida)
+
+def registrar_asistencia(correo_usuario):
+    fecha_asistencia = solicitar_fecha("Ingrese fecha de asistencia: ")
+    id_clase = input("Ingrese nombre de la clase a la que desea asistir: ")
+    ingreso = queries.registrar_asistencia(correo_usuario, id_clase, fecha_asistencia)
+    if (ingreso):
+        print("\nAsistencia registrada correctamente.\n")
+    else:
+        print("\nError al registrar asistencia.\n")
+
+
+def subpanel_miembro(correo_usuario):
     is_logged_miembro = True
     while (is_logged_miembro):
         mostrar_menu("PANEL MIEMBRO", OpcionesMenuMiembro)
         opcion = ingresar_opcion(OpcionesMenuMiembro)
         match opcion:
             case OpcionesMenuMiembro.VER_INFO_PERSONAL.value:
-                pass
+                print("[" + OpcionesMenuMiembro.VER_INFO_PERSONAL.name + "]\n")
+                get_info_personal(correo_usuario)
 
             case OpcionesMenuMiembro.VER_HORARIO_CLASES.value:
-                pass
+                print("[" + OpcionesMenuMiembro.VER_HORARIO_CLASES.name + "]\n")
+                print(get_info_clases())
 
             case OpcionesMenuMiembro.REGISTRAR_ASISTENCIA.value:
-                pass
+                print("[" + OpcionesMenuMiembro.REGISTRAR_ASISTENCIA.name + "]\n")                
+                registrar_asistencia(correo_usuario)
 
             case OpcionesMenuMiembro.CERRAR_SESION.value:
                 is_logged_miembro = False
@@ -276,7 +317,7 @@ def panel_principal():
                         subpanel_admin()
 
                     case Roles.MIEMBRO.value:
-                        subpanel_miembro()
+                        subpanel_miembro(correo_usuario)
 
             case OpcionesMenuPrincipal.CERRAR_APLICACION.value:
                 running = False
