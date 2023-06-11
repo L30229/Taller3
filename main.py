@@ -219,7 +219,6 @@ def subpanel_admin():
                     print("No hay miembros con membresía vencida.")
 
             case OpcionesMenuAdmin.AGREGAR_CLASES.value:
-                #PENDIENTE: COMPROBAR QUE UN INSTRUCTOR NO HAGA DOS CLASE A LA MISMA HORA.
                 print("[" + OpcionesMenuAdmin.AGREGAR_CLASES.name + "]\n")
                 agregar_clases()
 
